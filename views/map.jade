@@ -1,0 +1,33 @@
+extends layout
+block content
+    #map
+    #leg_title 
+        span#leg_items Map Legend
+    #leg
+        each layer, i in jmap
+            input(type='checkbox' id='#{layer.name}')
+            span#leg_items #{layer.name}
+            br
+    script(type='text/javascript').
+        L.mapbox.accessToken = 'pk.eyJ1IjoibmV3ZmllbGRzIiwiYSI6Ikk3TmFfYWMifQ.yxfeME9vJaT2GyCbnzsBzw'
+        var map = L.mapbox.map('map', 'examples.map-i86nkdio').setView([#{lat},#{lng}], 13);
+        $.getJSON('/maplayers',function(result){
+            $.each(result, function(i, mlayer){
+                addLayer(L.mapbox.featureLayer().loadURL('/mapjson/' + mlayer.name), mlayer.name);
+            });
+        });
+        function addLayer(layer, name) {
+            layer
+                //.addTo(map);
+            $('#' + name).click(function(e) {
+                e.stopPropagation();
+
+                if (map.hasLayer(layer)) {
+                    map.removeLayer(layer);
+                    this.className = '';
+                } else {
+                    map.addLayer(layer);
+                    this.className = 'active';
+                }
+            });
+        }
