@@ -30,7 +30,7 @@ router.get('/', function(req, res) {
 /* GET json data. */
 router.get('/mapjson/:name', function (req, res) {
     if (req.params.name) {
-        Json.findOne({ name: req.params.name },{'_id': 0}, function (err, docs) {
+        Json.findOne({ name: req.params.name },{}, function (err, docs) {
             res.json(docs);
         });
     }
@@ -38,7 +38,7 @@ router.get('/mapjson/:name', function (req, res) {
 
 /* GET layers json data. */
 router.get('/maplayers', function (req, res) {
-    Json.find({},{'_id': 0, 'name': 1}, function (err, docs) {
+    Json.find({},{'name': 1}, function (err, docs) {
         res.json(docs);
     });
 });
@@ -46,7 +46,7 @@ router.get('/maplayers', function (req, res) {
 /* GET Map page. */
 router.get('/map', function(req,res) {
     var db = req.db;
-    Json.find({},{'_id':0}, function(err,docs){
+    Json.find({},{}, function(err,docs){
         res.render('map', {
             "jmap" : docs,
             lat : 40.78854,
