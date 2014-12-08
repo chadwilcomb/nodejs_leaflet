@@ -20,7 +20,7 @@ var JsonSchema = new Schema({
 
 // Mongoose Model definition
 
-var Json = mongoose.model('JString', JsonSchema, 'leaflet_map');
+var Json = mongoose.model('JString', JsonSchema, 'layercollection');
 
 /* GET home page. */
 router.get('/', function(req, res) {
